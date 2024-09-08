@@ -1,0 +1,17 @@
+<div class="event-container">
+    <h1>Live Event Details</h1>
+    <div>
+        <p><strong>Title:</strong> {{ liveEvent?.title }}</p>
+        <p><strong>Description:</strong> {{ liveEvent?.description }}</p>
+        <p><strong>Date:</strong> {{ liveEvent?.date }}</p>
+        <p><strong>Time:</strong> {{ liveEvent?.time }}</p>
+        <p><strong>Place:</strong> {{ liveEvent?.place }}</p>
+        <p><strong>Category:</strong> {{ liveEvent?.category }}</p>
+        <p><strong>Max Participants:</strong> {{ liveEvent?.maxParticipants }}</p>
+        <img [src]="liveEvent?.imageUrl" alt="Event Image" style="max-width: 100%; height: auto;">
+    </div>
+    <div>
+        <a class="btn btn-primary" [routerLink]="['/liveEvents']">Back</a>
+        <!-- <a *ngIf="isAdmin()" class="btn btn-primary" [routerLink]="['']">Add Partcipants</a> -->
+    </div>
+</div>

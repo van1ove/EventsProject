@@ -1,0 +1,14 @@
+.logout-div{
+    flex-basis: 10%;
+    flex-wrap: inherit;
+}
+
+.logout-div__button {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    height: 100%;
+}
+
+.container {
+    flex-basis: 90%;
+}

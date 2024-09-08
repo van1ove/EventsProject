@@ -1,0 +1,13 @@
+<div class="login-container">
+  <div class="login-left">
+    <h2>Login! 👋</h2>
+    <form>
+      <label for="email">Email</label>
+      <input [(ngModel)]="email" type="text" id="email" name="email" placeholder="test@atheros.ai">
+      <label for="password">Password</label>
+      <input [(ngModel)]="password" type="password" id="password" name="password" placeholder="******">
+      <button type="submit" class="btn btn-signin" (click)="login()">Sign In</button>
+    </form>
+    <p>Don't have an account? <a href="#">Sign Up Now</a></p>
+  </div>
+</div>

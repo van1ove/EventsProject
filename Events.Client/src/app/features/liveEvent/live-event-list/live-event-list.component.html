@@ -1,0 +1,41 @@
+<div class="container">
+    <h1 class="mt-3">Live events</h1>
+
+    <div class="d-flex justify-content-end mt-3" *ngIf="isAdmin()">
+      <a [routerLink]="['/liveEvents/add']" class="btn btn-primary">Add event</a>
+    </div>
+
+    <ng-container *ngIf="liveEvents$ | async as liveEvents">
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Place</th>
+            <th>Category</th>
+            <th>Max Participants</th>
+            <th *ngIf="isAdmin()"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let liveEvent of liveEvents">
+            <td><a [routerLink]="['/liveEvents/info', liveEvent.id]">{{liveEvent.id}}</a></td>
+            <td>{{liveEvent.title}}</td>
+            <td>{{liveEvent.description}}</td>
+            <td>{{liveEvent.date}}</td>
+            <td>{{liveEvent.time.slice(0,5)}}</td>
+            <td>{{liveEvent.place}}</td>
+            <td>{{liveEvent.category}}</td>
+            <td style="background-color:darkslategray">{{liveEvent.maxParticipants}}</td>
+            <td *ngIf="isAdmin()" class="text-center">
+              <a class="btn btn-primary" [routerLink]="['/liveEvents', liveEvent.id]">Edit</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+</div>
