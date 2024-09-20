@@ -1,5 +1,6 @@
 using Events.DataAccess.Contexts;
 using Events_Web_Application.Configuration;
+using Events_Web_Application.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -24,6 +25,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 
 builder.ConfigurateUnitOfWork();
 builder.ConfigurateServices();
+
+builder.ConfigurateUserUseCases();
+builder.ConfigurateLiveEventUseCases();
+builder.ConfigurateAuthUseCases();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -77,6 +82,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

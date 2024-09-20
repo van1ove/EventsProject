@@ -23,30 +23,18 @@ namespace Events.DataAccess.Repositories
         public async Task<T?> UpdateAsync(T entity, Expression<Func<T, bool>> filter)
         {
             var existingEntity = await GetAsync(filter);
-
-            if (existingEntity != null)
-            {
-                _dbSet.Update(entity);
-            }
-
+            _dbSet.Update(entity);
             return existingEntity;
         }
 
         public async Task<T?> DeleteAsync(Expression<Func<T, bool>> filter)
         {
             var existingLiveEvent = await GetAsync(filter);
-            if (existingLiveEvent != null)
-            {
-                _dbSet.Remove(existingLiveEvent);
-            } 
+            _dbSet.Remove(existingLiveEvent);
             return existingLiveEvent;
         }
 
-        public async Task<IEnumerable<T>> GetByPredicateAsync(Expression<Func<T, bool>> predicate)
-        {
-            return await _dbSet
-                .Where(predicate)
-                .ToListAsync();
-        }
+        public async Task<IEnumerable<T>> GetByPredicateAsync(Expression<Func<T, bool>> predicate) 
+            => await _dbSet.Where(predicate).ToListAsync();
     }
 }

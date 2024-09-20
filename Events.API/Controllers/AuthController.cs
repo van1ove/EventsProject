@@ -1,6 +1,6 @@
-﻿using Events.Business.EnumUtility;
-using Events.Business.Services.AuthService;
-using Events.Business.Utility;
+﻿using Events.Business.UseCases.AuthUseCases.Login;
+using Events.Business.UseCases.AuthUseCases.RefreshToken;
+using Events.Business.UseCases.AuthUseCases.Register;
 using Events.Domain.DTO.AuthDtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,47 +10,40 @@ namespace Events_Web_Application.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
-
-        public AuthController(IAuthService authService)
+        private readonly ILoginUseCase _loginUseCase;
+        private readonly IRegisterUseCase _registerUseCase;
+        private readonly IRefreshTokenUseCase _refreshTokenUseCase;
+        public AuthController(ILoginUseCase loginUseCase,
+            IRegisterUseCase registerUseCase,
+            IRefreshTokenUseCase refreshTokenUseCase)
         {
-            _authService = authService;
+            _loginUseCase = loginUseCase;
+            _registerUseCase = registerUseCase;
+            _refreshTokenUseCase = refreshTokenUseCase;
         }
 
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto dto)
         {
-            var result = await _authService.Register(dto);
-
-            if (result.Item1 == OperationResult.Fail)
-                return BadRequest();
-
-            return Ok();    
+            await _registerUseCase.Register(dto);
+            return Ok();
         }
 
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginDto dto)
         {
-            var result = await _authService.Login(dto);
-
-            if (result.Item1 == OperationResult.Fail)
-                return Unauthorized();
-            
-            return Ok(result.Item2);
+            var result = await _loginUseCase.Login(dto);            
+            return Ok(result);
         }
 
         [HttpPost]
         [Route("refresh-token")]
         public async Task<ActionResult<AuthResponse>> RefreshToken([FromBody] RefreshTokenDto dto)
         {
-            var result = await _authService.RefreshToken(dto);
-
-            if (result.Item1 == OperationResult.Fail)
-                return Unauthorized();
-
-            return Ok(result.Item2);
+            var result = await _refreshTokenUseCase.RefreshToken(dto);
+            return Ok(result);
         }
     }
 }
